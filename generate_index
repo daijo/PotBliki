@@ -2,22 +2,25 @@
 
 # Generates a Markdown formated IndexPage.txt from all txt-files.
 
+FILES=`ls *.txt`
+
 echo "IndexPage"
 echo "========="
-echo ""
-echo "Posts"
-echo "-----"
-echo ""
+#echo ""
+#echo "Posts"
+#echo "-----"
+#echo ""
 
 # Find all files with post header and print filename - date (sorted by date)
 
-
-
 echo ""
-echo "WikiPages"
-echo "---------"
+echo "Wiki"
+echo "----"
 echo ""
 
 # For the rest in alphabetical order echo filename
 
-
+for f in $FILES
+do
+    echo $f | sed 's/\(.*\)\..*/\1/'
+done
