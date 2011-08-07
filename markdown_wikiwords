@@ -11,5 +11,4 @@ for f in $FILES
 do
 	echo "Processing $f"
 	sed -E 's/([A-Z][a-z]*)+[A-Z][a-z]+([A-Z][a-z]*)*/[&](&.html)/' <$f >intermediate/$f
-	cp $f intermediate/$f
 done

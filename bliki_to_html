@@ -1,9 +1,15 @@
 #!/bin/bash
 
-ALL_FILES=`ls`
+FILES=`ls intermediate/*.txt`
 
+rm -rf html
 mkdir html
 
-for ALL_FILES do
-    markdown_py 
-end
+for f in $FILES
+do
+    echo "Processing $f"
+    NAME=`echo $f | sed 's/\(.*\)\..*/\1/'`
+    markdown_py $f > $NAME.html
+done
+
+mv intermediate/*.html html/
