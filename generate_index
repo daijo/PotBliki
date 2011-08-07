@@ -1,0 +1,23 @@
+#!/bin/bash
+
+# Generates a Markdown formated IndexPage.txt from all txt-files.
+
+echo "IndexPage"
+echo "========="
+echo ""
+echo "Posts"
+echo "-----"
+echo ""
+
+# Find all files with post header and print filename - date (sorted by date)
+
+
+
+echo ""
+echo "WikiPages"
+echo "---------"
+echo ""
+
+# For the rest in alphabetical order echo filename
+
+

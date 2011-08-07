@@ -1,0 +1,9 @@
+#!/bin/bash
+
+ALL_FILES=`ls`
+
+mkdir html
+
+for ALL_FILES do
+    markdown_py 
+end
