@@ -1,0 +1,13 @@
+PotBliki
+========
+
+A plain text bliki inspiered by plain text wiki plugins for Vim and TextMate and the Git-powered plain text blog Toto.
+
+The project goal is to provide a small set of simple tools for publishing a personal bliki.
+
+
+Roadmap
+=======
+
+* Generate on push to git.
+* Vim-plugin.
