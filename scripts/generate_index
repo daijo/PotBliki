@@ -4,14 +4,23 @@
 
 FILES=`ls *.txt`
 
-echo "IndexPage"
+echo "$1"
 echo "========="
-#echo ""
-#echo "Posts"
-#echo "-----"
-#echo ""
+echo "----"
+
+echo ""
+echo "Posts"
+echo "-----"
+echo ""
 
 # Find all files with post header and print filename - date (sorted by date)
+
+for f in $FILES
+do
+    FIRST_WORD=`head -n 1 $f | awk '{print $1}'`
+    [ "$FIRST_WORD" == 'title:' ] && ( echo $f | sed 's/\(.*\)\..*/\1/')
+done
+
 
 echo ""
 echo "Wiki"
@@ -24,3 +33,6 @@ for f in $FILES
 do
     echo $f | sed 's/\(.*\)\..*/\1/'
 done
+
+echo ""
+echo "----"

@@ -1,0 +1,7 @@
+title: [TITLE]
+author: [LASTNAME] [FIRSTNAME]
+date: [YYYY]/[MM]/[DD]
+location: [CITY], [COUNTRY]
+tags: [TAGS]
+
+[POST]
