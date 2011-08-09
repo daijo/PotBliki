@@ -1,5 +1,9 @@
 #!/bin/bash
 
+function make {
+  echo "Making bliki..."
+}
+
 EXPECTED_ARGS=1
 E_BADARGS=65
 
@@ -11,6 +15,25 @@ fi
 
 # init (make .bliki and .bliki_conf)
 
-
+if [ $1 == 'init' ]
+then
+  echo "Initialalizing bliki..."
+fi
 
 # make (run the markup scripts)
+
+if [ $1 == 'make' ]
+then
+  make
+fi
+
+# help
+
+if [ $1 == 'help' ]
+then
+  echo "usage: potwiki init|make|help"
+  echo "init: inittiates a bliki in this directory."
+  echo "make: makes the bliki in this directory and moves the result to target_dir."
+fi
+
+
