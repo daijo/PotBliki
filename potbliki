@@ -1,0 +1,16 @@
+#!/bin/bash
+
+EXPECTED_ARGS=1
+E_BADARGS=65
+
+if [ $# -ne $EXPECTED_ARGS ]
+then
+  echo "usage: potwiki init|make|help"
+  exit $E_BADARGS
+fi
+
+# init (make .bliki and .bliki_conf)
+
+
+
+# make (run the markup scripts)
