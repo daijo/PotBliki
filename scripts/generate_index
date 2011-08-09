@@ -18,7 +18,8 @@ echo ""
 for f in $FILES
 do
     FIRST_WORD=`head -n 1 $f | awk '{print $1}'`
-    [ "$FIRST_WORD" == 'title:' ] && ( echo $f | sed 's/\(.*\)\..*/\1/')
+    DATE=`head -n 4 $f | sed -n 3p | awk '{print $2}'`
+    [ "$FIRST_WORD" == 'title:' ] && ( echo "* $DATE - $f" | sed 's/\(.*\)\..*/\1/')
 done
 
 
