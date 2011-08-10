@@ -8,6 +8,20 @@
 INDEX_PAGE="IndexPage.txt"
 BLIKI_NAME="PotBliki"
 
+function init {
+  if [ -f ./.bliki/bliki_conf ]
+  then
+    echo "This is a bliki already."
+    exit 1
+  fi
+  echo "Initialalizing bliki..."
+
+  mkdir .bliki
+  echo "title: $BLIKI_NAME" > .bliki/bliki_conf
+  echo "target_dir: ~/bliki_root" >> .bliki/bliki_conf
+
+}
+
 function make {
 
   if [ ! -f ./.bliki/bliki_conf ]
@@ -122,7 +136,7 @@ fi
 
 if [ $1 == 'init' ]
 then
-  echo "Initialalizing bliki..."
+  init
 fi
 
 # make (run the markup scripts)
