@@ -1,7 +1,107 @@
 #!/bin/bash
 
+INDEX_PAGE="IndexPage.txt"
+BLIKI_NAME="PotBliki"
+
 function make {
+
+  if [ ! -f ./.bliki/bliki_conf ]
+  then
+    echo "No bliki found, use potbliki init to create one here."
+    exit 1
+  fi
   echo "Making bliki..."
+
+  SRC_FILES=`ls *.txt`
+
+  read_bliki_conf
+  generate_index
+  markdown_wikiwords
+  bliki_to_html
+  copy_to_targetdir
+}
+
+function read_bliki_conf {
+  echo "Reading config... (Not yet impl.)"
+}
+
+function generate_index {
+
+echo "$BLIKI_NAME" > $INDEX_PAGE
+echo "=========" >> $INDEX_PAGE
+echo "----" >> $INDEX_PAGE
+echo "" >> $INDEX_PAGE
+echo "Posts"  >> $INDEX_PAGE
+echo "-----" >> $INDEX_PAGE
+echo "" >> $INDEX_PAGE
+
+# Find all files with post header and print filename - date (sorted by date)
+
+for f in $SRC_FILES
+do
+    FIRST_WORD=`head -n 1 $f | awk '{print $1}'`
+    DATE=`head -n 4 $f | sed -n 3p | awk '{print $2}'`
+    [ "$FIRST_WORD" == 'title:' ] && ( echo "* $DATE - $f" | sed 's/\(.*\)\..*/\1/'  >> $INDEX_PAGE)
+done
+
+
+echo "" >> $INDEX_PAGE
+echo "Wiki" >> $INDEX_PAGE
+echo "----" >> $INDEX_PAGE
+echo "" >> $INDEX_PAGE
+
+# For the rest in alphabetical order echo filename
+
+for f in $SRC_FILES
+do
+    echo $f | sed 's/\(.*\)\..*/\1/' >> $INDEX_PAGE
+
+done
+
+echo "" >> $INDEX_PAGE
+echo "----" >> $INDEX_PAGE
+
+}
+
+function markdown_wikiwords {
+
+  echo "Marking down WikiWords..."
+
+# Find CamelCase words by reg exp and replace with Markdown link [word](word.html)
+
+  rm -rf .bliki/intermediate
+  mkdir .bliki/intermediate
+
+  FILES=`ls *.txt`
+
+  for f in $FILES
+  do
+	echo "Processing $f"
+	sed -E 's/([A-Z][a-z]*)+[A-Z][a-z]+([A-Z][a-z]*)*/[&](&.html)/' <$f >.bliki/intermediate/$f
+  done
+}
+
+function bliki_to_html {
+
+  echo "Making HTML..."
+
+  FILES=`ls .bliki/intermediate/*.txt`
+
+  rm -rf .bliki/html
+  mkdir .bliki/html
+
+  for f in $FILES
+  do
+    echo "Processing $f"
+    NAME=`echo $f | sed 's/\(.*\)\..*/\1/'`
+    markdown_py $f > $NAME.html
+  done
+
+  mv .bliki/intermediate/*.html .bliki/html/
+}
+
+function copy_to_targetdir {
+  echo "Copying to target_dir... (Not yet impl.)"
 }
 
 EXPECTED_ARGS=1
