@@ -6,7 +6,8 @@
 
 
 INDEX_PAGE="IndexPage.txt"
-BLIKI_NAME="PotBliki"
+_BLIKI_NAME="PotBliki"
+_TARGET_DIR="~/bliki_home"
 
 function init {
   if [ -f ./.bliki/bliki_conf ]
@@ -17,7 +18,7 @@ function init {
   echo "Initialalizing bliki..."
 
   mkdir .bliki
-  echo "title: $BLIKI_NAME" > .bliki/bliki_conf
+  echo "title: $_BLIKI_NAME" > .bliki/bliki_conf
   echo "target_dir: ~/bliki_root" >> .bliki/bliki_conf
 
 }
@@ -41,12 +42,18 @@ function make {
 }
 
 function read_bliki_conf {
-  echo "Reading config... (Not yet impl.)"
+  echo "Reading config..."
+
+  . ./.bliki/bliki_conf
+
+  _BLIKI_NAME=$BLIKI_NAME
+  _TARGET_DIR=$TARGET_DIR
 }
+
 
 function generate_index {
 
-echo "$BLIKI_NAME" > $INDEX_PAGE
+echo "$_BLIKI_NAME" > $INDEX_PAGE
 echo "=========" >> $INDEX_PAGE
 echo "----" >> $INDEX_PAGE
 echo "" >> $INDEX_PAGE
@@ -120,7 +127,20 @@ function bliki_to_html {
 }
 
 function copy_to_targetdir {
-  echo "Copying to target_dir... (Not yet impl.)"
+  echo "Copying to TARGET_DIR..."
+
+  # Check if path start with ~
+
+  if [ "${_TARGET_DIR:0:1}" == '~' ]
+  then
+    _TARGET_DIR=`echo $HOME${_TARGET_DIR:1}`
+  fi
+
+  if [ ! -f $_TARGET_DIR ]
+  then
+    mkdir -p $_TARGET_DIR
+  fi
+  cp .bliki/html/* $_TARGET_DIR
 }
 
 EXPECTED_ARGS=1
