@@ -37,7 +37,4 @@ TBD
 Roadmap
 -------
 
-* Generate RSS.
-* Investigate generate on push to git.
-* Use tags field.
-* Vim-plugin (generating post header from config).
+[Roadmap on Github](https://github.com/daijo/PotBliki/issues/milestones)
