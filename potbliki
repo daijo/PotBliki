@@ -18,8 +18,8 @@ function init {
   echo "Initialalizing bliki..."
 
   mkdir .bliki
-  echo "title: $_BLIKI_NAME" > .bliki/bliki_conf
-  echo "target_dir: ~/bliki_root" >> .bliki/bliki_conf
+  echo "BLIKI_NAME=\"$_BLIKI_NAME\"" > .bliki/bliki_conf
+  echo "TARGET_DIR=\"$_TARGET_DIR\"" >> .bliki/bliki_conf
 
 }
 
@@ -127,7 +127,7 @@ function bliki_to_html {
 }
 
 function copy_to_targetdir {
-  echo "Copying to TARGET_DIR..."
+  echo "Copying to $_TARGET_DIR..."
 
   # Check if path start with ~
 

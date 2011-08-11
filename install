@@ -1,0 +1,21 @@
+#!/bin/bash
+
+EXPECTED_ARGS=1
+E_BADARGS=65
+
+if [ $# -ne $EXPECTED_ARGS ]
+then
+  echo "usage: install [INSTALL_PATH]"
+  exit $E_BADARGS
+fi
+
+if [ ! -d $1 ]
+then
+  echo "Target path doesn't exist."
+  exit $E_BADARGS
+fi
+
+chmod u+x potbliki
+cp potbliki $1
+chmod u+x lib/python-markdown/markdown_py
+cp lib/python-markdown/markdown_py $1
