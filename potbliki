@@ -103,7 +103,7 @@ function markdown_wikiwords {
   for f in $FILES
   do
 	echo "Processing $f"
-	sed -E 's/([A-Z][a-z]*)+[A-Z][a-z]+([A-Z][a-z]*)*/[&](&.html)/' <$f >.bliki/intermediate/$f
+	sed -E 's/([A-Z][a-z]*)+[A-Z][a-z]+([A-Z][a-z]*)*/[&](&.html)/g' <$f >.bliki/intermediate/$f
   done
 }
 
