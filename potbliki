@@ -4,7 +4,7 @@
 # © 2011 Daniel Hjort
 # CC BY-SA 3.0 http://creativecommons.org/licenses/by-sa/3.0/
 
-
+SYSTEM=`uname -s`
 INDEX_PAGE="IndexPage.txt"
 _BLIKI_NAME="PotBliki"
 _TARGET_DIR="~/bliki_home"
@@ -93,6 +93,13 @@ function markdown_wikiwords {
 
   echo "Marking down WikiWords..."
 
+  SED_FLAG=""
+
+  if [ "$SYSTEM" == 'Darwin' ]
+  then
+    SED_FLAG="-E"
+  fi
+
 # Find CamelCase words by reg exp and replace with Markdown link [word](word.html)
 
   rm -rf .bliki/intermediate
@@ -103,7 +110,7 @@ function markdown_wikiwords {
   for f in $FILES
   do
 	echo "Processing $f"
-	sed -E 's/([A-Z][a-z]*)+[A-Z][a-z]+([A-Z][a-z]*)*/[&](&.html)/g' <$f >.bliki/intermediate/$f
+	sed $SED_FLAG 's/([A-Z][a-z]*)+[A-Z][a-z]+([A-Z][a-z]*)*/[&](&.html)/g' <$f >.bliki/intermediate/$f
   done
 }
 
