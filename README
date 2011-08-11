@@ -8,10 +8,10 @@ The project goal is to provide a small set of simple tools for publishing a pers
 Start using
 -----------
 
-1. Install the script in your PATH.
+1. Install the scripts in your PATH using 'install [PATH]'.
 2. In the directory you want to be your Bliki home run 'potwiki init'.
 3. Edit .bliki/bliki_conf
-4. Write wikipages and post in Markdown.
+4. Write wikipages and posts in Markdown.
 5. Run 'potwiki make'.
 
 It is recommended to use a plain text wiki plugin for your editor.
@@ -37,7 +37,7 @@ TBD
 Roadmap
 -------
 
-* Read config
+* Generate RSS.
 * Investigate generate on push to git.
 * Use tags field.
 * Vim-plugin (generating post header from config).
