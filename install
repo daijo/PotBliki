@@ -17,5 +17,9 @@ fi
 
 chmod u+x potbliki
 cp potbliki $1
-chmod u+x lib/python-markdown/markdown_py
-cp lib/python-markdown/markdown_py $1
+ORIG_DIR=`pwd`
+cd lib/python_markdown/
+python setup.py install
+cd $ORIG_DIR
+cp lib/python_markdown/bin/markdown_py $1
+
