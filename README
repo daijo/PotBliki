@@ -1,9 +1,11 @@
 PotBliki
 ========
 
-A plain text bliki inspiered by plain text wiki plugins for Vim and TextMate and the Git-powered plain text blog Toto.
+Plain text [Bliki][1] tools inspired by Edwin Steiner's [PotWiki][2] for Vim, Matt Web's [TextMate bundle][3] and the Git-powered plain text blog [Toto][4].
 
-The project goal is to provide a small set of simple tools for publishing a personal bliki.
+The project goal is to provide a small set of simple tools for publishing a personal Bliki.
+
+Uses [Python-Markdown][5].
 
 Start using
 -----------
@@ -38,3 +40,9 @@ Roadmap
 -------
 
 [Roadmap on Github](https://github.com/daijo/PotBliki/issues/milestones)
+
+[1]: http://en.wikipedia.org/wiki/Bliki
+[2]: http://www.vim.org/scripts/script.php?script_id=1018
+[3]: http://interconnected.org/home/2007/05/20/plain_text_wiki
+[4]: http://cloudhead.io/toto
+[5]: https://github.com/waylan/Python-Markdown
