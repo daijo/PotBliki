@@ -164,8 +164,8 @@ function markdown_wikiwords {
   for f in $FILES
   do
     echo "Processing $f"
-    sed $SED_FLAG 's/([A-Z][a-z]*)+[A-Z][a-z]+([A-Z][a-z]*)*/[&](&.html)/g' <$f >${f}_
-    mv ${f}_ $f    
+    perl -pe 's/(?<!~)([A-Z][a-z]*)+[A-Z][a-z]+([A-Z][a-z]*)*/[$&]($&.html)/g' <$f >${f}_
+    perl -pe 's/(?<!~)~//g' <${f}_ >$f
   done
 }
 
