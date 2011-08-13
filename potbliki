@@ -88,9 +88,25 @@ for f in $SRC_FILES
 do
     FIRST_WORD=`head -n 1 $f | awk '{print $1}'`
     DATE=`head -n 4 $f | sed -n 3p | awk '{print $2}'`
-    [ "$FIRST_WORD" == 'title:' ] && ( echo "* $DATE - $f" | sed 's/\(.*\)\..*/\1/'  >> $INDEX_PAGE)
+    [ "$FIRST_WORD" == 'title:' ] && ( echo "* $DATE - $f" | sed 's/\(.*\)\..*/\1/'  >> .bliki/post_list)
 done
 
+sort -r .bliki/post_list > .bliki/sorted_post_list
+
+SORTED_POSTS=`cat .bliki/sorted_post_list`
+
+OLD_IFS=$IFS
+IFS=$'\n' #set delimiter to newline 
+
+for post in $SORTED_POSTS
+do
+    echo "$post" >> $INDEX_PAGE
+done
+
+IFS=$OLD_IFS
+
+rm .bliki/post_list
+rm .bliki/sorted_post_list
 
 echo "" >> $INDEX_PAGE
 echo "Wiki" >> $INDEX_PAGE
@@ -106,7 +122,6 @@ do
 done
 
 echo "" >> $INDEX_PAGE
-#echo "----" >> $INDEX_PAGE
 
 }
 
