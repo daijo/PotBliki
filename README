@@ -29,6 +29,10 @@ date: [YYYY]/[MM]/[DD]
 location: [CITY], [COUNTRY]
 tags: [TAGS]
 
+Escape WikiWords
+----------------
+
+Sometimes you want to escape the WikiWords. Use ~ in front of the WikiWord (~WikiWord) and it won't be made in to a link. If you want to use a ~ write ~~ and one will survive the process.
 
 Use as Git hook
 ---------------
