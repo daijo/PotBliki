@@ -17,11 +17,13 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 SYSTEM=`uname -s`
+SCRIPT_DIR="$( cd "$( dirname "$0" )" && pwd )"
 INDEX_PAGE="IndexPage.txt"
 _BLIKI_NAME="PotBliki"
 _TARGET_DIR="~/bliki_home"
 _CUSTOM_LINKS=""
 _FOOTER_TEXT="Plain Text Bliki"
+_DISQUS_SHORTNAME=""
 
 
 function init {
@@ -56,6 +58,7 @@ function make {
   add_footer
   markdown_wikiwords
   bliki_to_html
+  add_disqus
   copy_to_targetdir
 }
 
@@ -68,9 +71,8 @@ function read_bliki_conf {
   _TARGET_DIR=$TARGET_DIR
   _CUSTOM_LINKS=$CUSTOM_LINKS
   _FOOTER_TEXT=$FOOTER_TEXT
+  _DISQUS_SHORTNAME=$DISQUS_SHORTNAME
 }
-
-
 
 function generate_index {
 
@@ -186,6 +188,25 @@ function bliki_to_html {
   done
 
   mv .bliki/intermediate/*.html .bliki/html/
+}
+
+function add_disqus {
+  
+  echo "Adding disqus HTML..."
+ 
+  FILES=`ls .bliki/html/*.html`
+  
+  for f in $FILES
+  do
+    echo "Processing $f"
+    WIKI_WORD=`find $f | awk -F'/' '{print $NF}'`
+    WIKI_WORD=`echo $WIKI_WORD | sed 's/\(.*\)\..*/\1/'`
+    cat $SCRIPT_DIR/.potbliki/disqus-template.html | sed -e 's/\[DISCUS_SHORTNAME\]/'"$_DISQUS_SHORTNAME"'/' -e 's/\[WIKI_WORD\]/'"$WIKI_WORD"'/' > specific-discus-template.html
+    cat $f specific-discus-template.html > ${f}_
+    mv ${f}_ $f 
+  done
+
+  rm specific-discus-template.html
 }
 
 function copy_to_targetdir {
