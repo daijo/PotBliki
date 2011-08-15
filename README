@@ -10,11 +10,12 @@ Uses [Python-Markdown][5].
 Start using
 -----------
 
-1. Install the scripts in your PATH using 'install [PATH]'.
-2. In the directory you want to be your Bliki home run 'potwiki init'.
-3. Edit .bliki/bliki_conf
-4. Write wikipages and posts in Markdown.
-5. Run 'potwiki make'.
+1. Install lib/python_markdown.
+2. Install the script in your PATH using 'install [PATH]'.
+3. In the directory you want to be your Bliki home run 'potwiki init'.
+4. Edit .bliki/bliki_conf
+5. Write wikipages and posts in Markdown.
+6. Run 'potwiki make'.
 
 It is recommended to use a plain text wiki plugin for your editor.
 

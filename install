@@ -37,9 +37,9 @@ cp potbliki $1
 mkdir $1/.potbliki
 cp templates/disqus-template.html $1/.potbliki
 
-#ORIG_DIR=`pwd`
-#cd lib/python_markdown/
-#python setup.py install
-#cd $ORIG_DIR
-#cp lib/python_markdown/bin/markdown_py $1
+DEP=`which markdown_py`
 
+if [ "$DEP" == '' ]
+then
+  echo "You also need to install markdown-python."
+fi
