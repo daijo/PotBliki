@@ -111,6 +111,8 @@ rm .bliki/post_list
 rm .bliki/sorted_post_list
 
 echo "" >> $INDEX_PAGE
+echo "[_Posts RSS_](rss.xml)" >> $INDEX_PAGE
+echo "" >> $INDEX_PAGE
 echo "Wiki" >> $INDEX_PAGE
 echo "----" >> $INDEX_PAGE
 echo "" >> $INDEX_PAGE
@@ -124,6 +126,8 @@ do
 done
 
 echo "" >> $INDEX_PAGE
+
+cp $INDEX_PAGE index.txt 
 
 }
 
