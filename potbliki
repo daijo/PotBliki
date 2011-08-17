@@ -125,9 +125,7 @@ do
 
 done
 
-echo "" >> $INDEX_PAGE
-
-cp $INDEX_PAGE index.txt 
+echo "" >> $INDEX_PAGE 
 
 }
 
@@ -143,11 +141,12 @@ function add_footer {
   do
 	echo "Processing $f"
 	cp $f .bliki/intermediate/$f
-        sed '$ a\
+
+        cat << EOF >> .bliki/intermediate/$f
+
 ----
-$ a\ 
-[ IndexPage | '"$CUSTOM_LINKS $FOOTER_TEXT"' ]' .bliki/intermediate/$f >  .bliki/intermediate/_$f
-        mv .bliki/intermediate/_$f .bliki/intermediate/$f
+[ IndexPage | $CUSTOM_LINKS $FOOTER_TEXT ]
+EOF
 
   done
 }
@@ -228,6 +227,11 @@ function copy_to_targetdir {
     mkdir -p $_TARGET_DIR
   fi
   cp .bliki/html/* $_TARGET_DIR
+
+  if [ ! -e $_TARGET_DIR/index.html ]
+  then
+    ln -s $_TARGET_DIR/IndexPage.html $_TARGET_DIR/index.html
+  fi
 }
 
 EXPECTED_ARGS=1
