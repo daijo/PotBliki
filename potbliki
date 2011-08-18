@@ -24,6 +24,8 @@ _TARGET_DIR="~/bliki_home"
 _CUSTOM_LINKS=""
 _FOOTER_TEXT="Plain Text Bliki"
 _DISQUS_SHORTNAME=""
+_BLIKI_URL=""
+_BLIKI_DESC="Bliki description."
 
 
 function init {
@@ -55,6 +57,7 @@ function make {
 
   read_bliki_conf
   generate_index
+  generate_feed
   add_footer
   markdown_wikiwords
   bliki_to_html
@@ -72,9 +75,12 @@ function read_bliki_conf {
   _CUSTOM_LINKS=$CUSTOM_LINKS
   _FOOTER_TEXT=$FOOTER_TEXT
   _DISQUS_SHORTNAME=$DISQUS_SHORTNAME
+  _BLIKI_URL=$BLIKI_URL
+  _BLIKI_DESC=$BLIKI_DESC
 }
 
 function generate_index {
+echo "Generating IndexPage..."
 
 echo "$_BLIKI_NAME" > $INDEX_PAGE
 echo "=========" >> $INDEX_PAGE
@@ -122,10 +128,47 @@ echo "" >> $INDEX_PAGE
 for f in $SRC_FILES
 do
     echo $f | sed 's/\(.*\)\..*/\1/' >> $INDEX_PAGE
-
 done
 
 echo "" >> $INDEX_PAGE 
+
+}
+
+function generate_feed {
+  echo "Generating feed..."
+
+  rm -rf .bliki/xml
+  mkdir .bliki/xml
+
+cat << EOF > .bliki/xml/rss.xml
+<?xml version="1.0" ?>
+<rss version="2.0">
+  <channel>
+    <title>$_BLIKI_NAME</title>
+    <link>$_BLIKI_URL</link>
+    <description>$_BLIKI_DESC</description>
+EOF
+
+OLD_IFS=$IFS
+IFS=$'\n' #set delimiter to newline 
+
+  for post in $SORTED_POSTS
+  do
+    WIKI_WORD=`echo $post | awk '{print $4}'`
+    cat << EOF >> .bliki/xml/rss.xml
+    <item>
+       <title>$WIKI_WORD</title>
+       <link>$BLIKI_URL/$WIKI_WORD.html</link> 
+    </item>
+EOF
+  done
+
+IFS=$OLD_IFS
+
+cat << EOF >> .bliki/xml/rss.xml
+  </channel>
+</rss>
+EOF
 
 }
 
@@ -227,11 +270,13 @@ function copy_to_targetdir {
     mkdir -p $_TARGET_DIR
   fi
   cp .bliki/html/* $_TARGET_DIR
+  cp .bliki/xml/* $_TARGET_DIR
 
   if [ ! -e $_TARGET_DIR/index.html ]
   then
     ln -s $_TARGET_DIR/IndexPage.html $_TARGET_DIR/index.html
   fi
+
 }
 
 EXPECTED_ARGS=1
