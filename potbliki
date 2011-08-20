@@ -41,6 +41,8 @@ function init {
   echo "TARGET_DIR=\"$_TARGET_DIR\"" >> .bliki/bliki_conf
   echo "CUSTOM_LINKS=\"$_CUSTOM_LINKS\"" >> .bliki/bliki_conf
   echo "FOOTER_TEXT=\"$_FOOTER_TEXT\"" >> .bliki/bliki_conf
+  echo "BLIKI_URL=\"$_BLIKI_URL\"" >> .bliki/bliki_conf
+  echo "BLIKI_DESC=\"$_BLIKI_DESC\"" >> .bliki/bliki_conf
 
 }
 
