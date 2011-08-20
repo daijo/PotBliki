@@ -1,5 +1,4 @@
-PotBliki
-========
+# PotBliki
 
 Plain text [Bliki][1] tools inspired by Edwin Steiner's [PotWiki][2] for Vim, Matt Web's [TextMate bundle][3] and the Git-powered plain text blog [Toto][4].
 
@@ -7,8 +6,7 @@ The project goal is to provide a small set of simple tools for publishing a pers
 
 Uses [Python-Markdown][5].
 
-Start using
------------
+## Start using
 
 1. Install lib/python_markdown.
 2. Install the script in your PATH using 'install [PATH]'.
@@ -19,10 +17,9 @@ Start using
 
 It is recommended to use a plain text wiki plugin for your editor.
 
-Post header
------------
+## Post header
 
-Every blog post shlud have the following header:
+Every blog post should have the following header:
 
 title: [TITLE]
 author: [LASTNAME] [FIRSTNAME]
@@ -30,13 +27,21 @@ date: [YYYY]/[MM]/[DD]
 location: [CITY], [COUNTRY]
 tags: [TAGS]
 
-Escape WikiWords
-----------------
+## Escape WikiWords
 
 Sometimes you want to escape the WikiWords. Use ~ in front of the WikiWord (~WikiWord) and it won't be made in to a link. If you want to use a ~ write ~~ and one will survive the process.
 
-Use as Git hook
----------------
+## Github Integration
+
+### Edit pages on Github
+
+If you store the Bliki repostitory on Github you can fill in the following info in .bliki/bliki_conf:
+
+GITHUB_REPO_URL="https://github.com/daijo/Bliki"
+
+This will make a "Edit on Github" link appear on each page. If you have acces to the repo there you can edit the page following the link.
+
+### Update Bliki on Github post-receive
 
 TBD
 

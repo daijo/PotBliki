@@ -26,6 +26,7 @@ _FOOTER_TEXT="Plain Text Bliki"
 _DISQUS_SHORTNAME=""
 _BLIKI_URL=""
 _BLIKI_DESC="Bliki description."
+_GITHUB_REPO_URL=""
 
 
 function init {
@@ -43,6 +44,8 @@ function init {
   echo "FOOTER_TEXT=\"$_FOOTER_TEXT\"" >> .bliki/bliki_conf
   echo "BLIKI_URL=\"$_BLIKI_URL\"" >> .bliki/bliki_conf
   echo "BLIKI_DESC=\"$_BLIKI_DESC\"" >> .bliki/bliki_conf
+  echo "GITHUB_REPO_URL=\"$_GITHUB_REPO_URL\"" >> .bliki/bliki_conf
+
 
 }
 
@@ -80,6 +83,7 @@ function read_bliki_conf {
   _DISQUS_SHORTNAME=$DISQUS_SHORTNAME
   _BLIKI_URL=$BLIKI_URL
   _BLIKI_DESC=$BLIKI_DESC
+  _GITHUB_REPO_URL=$GITHUB_REPO_URL
 }
 
 function generate_index {
@@ -181,17 +185,29 @@ function add_footer {
   rm -rf .bliki/intermediate
   mkdir .bliki/intermediate
 
+  branch_name=$(git symbolic-ref -q HEAD)
+  branch_name=${branch_name##refs/heads/}
+  branch_name=${branch_name:-HEAD}
+
   FILES=`ls *.txt`
 
   for f in $FILES
   do
 	echo "Processing $f"
+
+        if [ $f != $INDEX_PAGE ] 
+        then
+	  EDIT_LINK="[Edit on Github]($_GITHUB_REPO_URL/edit/$branch_name/~$f) | "
+        else
+          EDIT_LINK=""
+        fi	
+
 	cp $f .bliki/intermediate/$f
 
         cat << EOF >> .bliki/intermediate/$f
 
 ----
-[ IndexPage | $CUSTOM_LINKS $FOOTER_TEXT ]
+[ IndexPage | $EDIT_LINK $CUSTOM_LINKS $FOOTER_TEXT ]
 EOF
 
   done
