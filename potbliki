@@ -195,7 +195,7 @@ function add_footer {
   do
 	echo "Processing $f"
 
-        if [ $f != $INDEX_PAGE ] 
+        if [ $f != $INDEX_PAGE -a "$_GITHUB_REPO_URL" != "" ] 
         then
 	  EDIT_LINK="[Edit on Github]($_GITHUB_REPO_URL/edit/$branch_name/~$f) | "
         else
