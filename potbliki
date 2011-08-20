@@ -64,6 +64,7 @@ function make {
   markdown_wikiwords
   bliki_to_html
   add_disqus
+  add_container_html
   copy_to_targetdir
 }
 
@@ -216,6 +217,7 @@ function markdown_wikiwords {
     echo "Processing $f"
     perl -pe 's/(?<!~)([A-Z][a-z]*)+[A-Z][a-z]+([A-Z][a-z]*)*/[$&]($&.html)/g' <$f >${f}_
     perl -pe 's/(?<!~)~//g' <${f}_ >$f
+    rm ${f}_
   done
 }
 
@@ -257,6 +259,27 @@ function add_disqus {
   rm specific-discus-template.html
 }
 
+function add_container_html {
+
+  echo "Adding container html..."
+
+  FILES=`ls .bliki/html/*.html`
+
+  for f in $FILES
+  do
+    echo "Processing $f"
+    cat $SCRIPT_DIR/.potbliki/html-head-template.html | sed -e 's/\[BLIKI_NAME\]/'"$_BLIKI_NAME"'/g' > specific-html-head-template.html
+    cat specific-html-head-template.html $f > ${f}_
+    mv ${f}_ $f
+
+    cat << EOF >> $f
+</body>
+EOF
+  done
+
+  rm specific-html-head-template.html
+}
+
 function copy_to_targetdir {
   echo "Copying to $_TARGET_DIR..."
 
@@ -273,6 +296,8 @@ function copy_to_targetdir {
   fi
   cp .bliki/html/* $_TARGET_DIR
   cp .bliki/xml/* $_TARGET_DIR
+  cp .bliki/stylesheet.css $_TARGET_DIR
+  cp .bliki/favicon.ico $_TARGET_DIR
 
   if [ ! -e $_TARGET_DIR/index.html ]
   then
