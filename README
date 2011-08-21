@@ -35,11 +35,11 @@ Sometimes you want to escape the WikiWords. Use ~ in front of the WikiWord (~Wik
 
 ### Edit pages on Github
 
-If you store the Bliki repostitory on Github you can fill in the following info in .bliki/bliki_conf:
+If you store the Bliki repository on Github you can fill in the following info in .bliki/bliki_conf:
 
 GITHUB_REPO_URL="https://github.com/daijo/Bliki"
 
-This will make a "Edit on Github" link appear on each page. If you have acces to the repo there you can edit the page following the link.
+This will make a "Edit on Github" link appear on each page. If you have access to the repo there you can edit the page following the link.
 
 ### Update Bliki on Github post-receive
 
