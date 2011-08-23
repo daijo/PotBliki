@@ -65,6 +65,7 @@ function make {
   generate_feed
   add_footer
   markdown_wikiwords
+  add_post_header
   bliki_to_html
   add_disqus
   add_container_html
@@ -234,6 +235,33 @@ function markdown_wikiwords {
     perl -pe 's/(?<!~)([A-Z][a-z]*)+[A-Z][a-z]+([A-Z][a-z]*)*/[$&]($&.html)/g' <$f >${f}_
     perl -pe 's/(?<!~)~//g' <${f}_ >$f
     rm ${f}_
+  done
+}
+
+function add_post_header {
+
+  echo "Adding post header..."
+
+  FILES=`ls .bliki/intermediate/*.txt`
+
+  for f in $FILES
+  do
+    FIRST_LINE=`head -n 1 $f`
+    FIRST_WORD=`echo $FIRST_LINE | awk '{print $1}'` # Already done this, optimization opertunity
+    if [ "$FIRST_WORD" == 'title:' ]
+    then
+      echo "Processing $f"
+      sed '1,1d' $f > ${f}_
+      cat <<EOF > $f
+`echo $FIRST_LINE | sed 's/title://'` 
+====
+
+----
+EOF
+      cat $f ${f}_ > ${f}__
+      mv ${f}__ $f
+      rm ${f}_
+    fi
   done
 }
 
