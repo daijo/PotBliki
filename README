@@ -21,11 +21,11 @@ It is recommended to use a plain text wiki plugin for your editor.
 
 Every blog post should have the following header:
 
-title: [TITLE]
-author: [LASTNAME] [FIRSTNAME]
-date: [YYYY]/[MM]/[DD]
-location: [CITY], [COUNTRY]
-tags: [TAGS]
+    title: [TITLE]
+    author: [LASTNAME] [FIRSTNAME]
+    date: [YYYY]/[MM]/[DD]
+    location: [CITY], [COUNTRY]
+    tags: [TAGS]
 
 ## Escape WikiWords
 
@@ -37,7 +37,7 @@ Sometimes you want to escape the WikiWords. Use ~ in front of the WikiWord (~Wik
 
 If you store the Bliki repository on Github you can fill in the following info in .bliki/bliki_conf:
 
-GITHUB_REPO_URL="https://github.com/daijo/Bliki"
+    GITHUB_REPO_URL="https://github.com/daijo/Bliki"
 
 This will make a "Edit on Github" link appear on each page. If you have access to the repo there you can edit the page following the link.
 
@@ -45,6 +45,11 @@ This will make a "Edit on Github" link appear on each page. If you have access t
 
 TBD
 
+## Disqus Integration
+
+If you have a Disqus-account, register the Bliki there and enter the Disqus short name in your .bliki_conf:
+
+    DISQUS_SHORTNAME="techaregbliki"
 
 Roadmap
 -------
