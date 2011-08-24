@@ -37,6 +37,7 @@ cp potbliki $1
 mkdir $1/.potbliki
 cp templates/disqus-template.html $1/.potbliki
 cp templates/html-head-template.html $1/.potbliki
+cp push.cgi $1/.potbliki
 
 DEP=`which markdown_py`
 

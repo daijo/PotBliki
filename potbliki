@@ -45,8 +45,21 @@ function init {
   echo "BLIKI_URL=\"$_BLIKI_URL\"" >> .bliki/bliki_conf
   echo "BLIKI_DESC=\"$_BLIKI_DESC\"" >> .bliki/bliki_conf
   echo "GITHUB_REPO_URL=\"$_GITHUB_REPO_URL\"" >> .bliki/bliki_conf
+}
 
+function github {
 
+  if [ ! -f ./.bliki/bliki_conf ]
+  then
+    echo "No bliki found, use potbliki init to create one here."
+    exit 1
+  fi
+
+  cp $SCRIPT_DIR/.potbliki/push.cgi .bliki
+  # write push_conf
+  cat << EOF > .bliki/push_conf
+BLIKI_DIR=`pwd`
+EOF
 }
 
 function make {
@@ -343,6 +356,17 @@ function copy_to_targetdir {
   cp .bliki/stylesheet.css $_TARGET_DIR
   cp .bliki/favicon.ico $_TARGET_DIR
 
+  if [ -e .bliki/push.cgi ]
+  then
+
+    if [ ! -f  $_TARGET_DIR/cgi-bin ]
+    then
+      mkdir $_TARGET_DIR/cgi-bin
+      cp .bliki/push.cgi $_TARGET_DIR/cgi-bin
+      cp .bliki/push_conf $_TARGET_DIR/cgi-bin
+    fi
+  fi
+
   if [ ! -e $_TARGET_DIR/index.html ]
   then
     ln -s $_TARGET_DIR/IndexPage.html $_TARGET_DIR/index.html
@@ -355,7 +379,7 @@ E_BADARGS=65
 
 if [ $# -ne $EXPECTED_ARGS ]
 then
-  echo "usage: potwiki init|make|help"
+  echo "usage: potwiki init|github|make|help"
   exit $E_BADARGS
 fi
 
@@ -364,6 +388,13 @@ fi
 if [ $1 == 'init' ]
 then
   init
+fi
+
+# github (adds github post-receive cgi-script)
+
+if [ $1 == 'github' ]
+then
+  github
 fi
 
 # make (run the markup scripts)
@@ -377,8 +408,9 @@ fi
 
 if [ $1 == 'help' ]
 then
-  echo "usage: potwiki init|make|help"
-  echo "init: inittiates a bliki in this directory."
+  echo "usage: potwiki init|github|make|help"
+  echo "init: initiates a bliki in this directory."
+  echo "github: adds github post-receive cgi-script to this bliki."
   echo "make: makes the bliki in this directory and moves the result to target_dir."
 fi
 
