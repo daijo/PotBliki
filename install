@@ -39,9 +39,13 @@ cp templates/disqus-template.html $1/.potbliki
 cp templates/html-head-template.html $1/.potbliki
 cp push.cgi $1/.potbliki
 
-DEP=`which markdown_py`
+DEP=`which sundown`
 
 if [ "$DEP" == '' ]
 then
-  echo "You also need to install markdown-python."
+  echo "You also need to install sundown."
+  echo "cd lib/sundown"
+  echo "make"
+  echo "chmod 755 sundown"
+  echo "cp sundown [YOUR_PATH]"
 fi
