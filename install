@@ -39,6 +39,11 @@ cp templates/disqus-template.html $1/.potbliki
 cp templates/html-head-template.html $1/.potbliki
 cp push.cgi $1/.potbliki
 
+cat <<EOF > $1/.potbliki/potbliki_env
+POTBLIKI_USER_HOME=$HOME
+EOF
+
+
 DEP=`which sundown`
 
 if [ "$DEP" == '' ]

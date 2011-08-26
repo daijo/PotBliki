@@ -99,6 +99,8 @@ function read_bliki_conf {
   _BLIKI_URL=$BLIKI_URL
   _BLIKI_DESC=$BLIKI_DESC
   _GITHUB_REPO_URL=$GITHUB_REPO_URL
+
+  . $SCRIPT_DIR/.potbliki/potbliki_env
 }
 
 function generate_index {
@@ -346,7 +348,7 @@ function copy_to_targetdir {
 
   if [ "${_TARGET_DIR:0:1}" == '~' ]
   then
-    _TARGET_DIR=`echo $HOME${_TARGET_DIR:1}`
+    _TARGET_DIR=`echo $POTBLIKI_USER_HOME${_TARGET_DIR:1}`
   fi
 
   if [ ! -f $_TARGET_DIR ]
