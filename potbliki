@@ -293,7 +293,7 @@ function bliki_to_html {
     echo "Processing $f"
     NAME=`echo $f | sed 's/\(.*\)\..*/\1/'`
     #markdown_py $f > $NAME.html
-    ./sundown $f > $NAME.html
+    $SCRIPT_DIR/sundown $f > $NAME.html
   done
 
   mv .bliki/intermediate/*.html .bliki/html/
