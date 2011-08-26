@@ -9,4 +9,4 @@ echo "Pulling changes..." >> potbliki.log
 
 cd $BLIKI_DIR
 git pull
-potbliki make
+$POTBLIKI_PATH/potbliki make

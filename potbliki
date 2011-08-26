@@ -59,6 +59,7 @@ function github {
   # write push_conf
   cat << EOF > .bliki/push_conf
 BLIKI_DIR=`pwd`
+POTBLIKI_PATH=$SCRIPTDIR
 EOF
 }
 
