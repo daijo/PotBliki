@@ -6,6 +6,11 @@ The project goal is to provide a small set of simple tools for publishing a pers
 
 Uses [Sundown][5].
 
+## Run tests
+
+    chmod u+x runtests
+    ./runtests
+
 ## Start using
 
 1. Install lib/sundown.
