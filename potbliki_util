@@ -31,7 +31,7 @@ function markdown_wikiwords_in_file
   file=$1
 
   echo "Processing $file"
-  perl -pe 's/(?<!~)([A-Z][a-z]*)+[A-Z][a-z]+([A-Z][a-z]*)*/[$&]($&.html)/g' <$file >${file}_
+  perl -pe 's/(?<!~)(\b[A-Z][a-z]*)+[A-Z][a-z]+([A-Z][a-z]*)*/[$&]($&.html)/g' <$file >${file}_
   perl -pe 's/(?<!~)~//g' <${file}_ >$file
   rm ${file}_
 
