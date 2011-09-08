@@ -1,0 +1,70 @@
+#! /bin/sh
+
+# PotBliki, Plain Text Bliki Tools.
+# Copyright (C) 2011  Daniel Hjort
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+
+#-----------------------------------------------------------------------------
+# suite tests
+#
+
+TMP_TEST_DIR='./tmp_test_dir'
+
+testMarkdownWikiwords()
+{
+
+cat <<EOF > ./$TMP_TEST_DIR/test.txt
+This is text containing some WikiWords. Some are escaped like ~ThisOne.
+
+Others are VeryLongWikiWords. The can also be escape ~LikeTheOneHere.
+EOF
+
+markdown_wikiwords_in_file $TMP_TEST_DIR/test.txt
+
+cat <<EOF > ./$TMP_TEST_DIR/expected.txt
+This is text containing some [WikiWords](WikiWords.html). Some are escaped like ThisOne.
+
+Others are [VeryLongWikiWords](VeryLongWikiWords.html). The can also be escape LikeTheOneHere.
+EOF
+
+assertSame "" "$(diff ./$TMP_TEST_DIR/test.txt ./$TMP_TEST_DIR/expected.txt)"
+
+}
+
+#-----------------------------------------------------------------------------
+# suite functions
+#
+
+oneTimeSetUp()
+{
+
+# load shlib
+. ./potbliki_util
+
+mkdir $TMP_TEST_DIR
+
+}
+
+oneTimeTearDown()
+{
+
+rm -rf TMP_TEST_DIR
+
+}
+
+# load and run shUnit2
+. ./lib/shunit2-2.1.6/src/shunit2
+

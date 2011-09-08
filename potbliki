@@ -28,7 +28,6 @@ _BLIKI_URL=""
 _BLIKI_DESC="Bliki description."
 _GITHUB_REPO_URL=""
 
-
 function init {
   if [ -f ./.bliki/bliki_conf ]
   then
@@ -230,30 +229,6 @@ EOF
   done
 }
 
-function markdown_wikiwords {
-
-  echo "Marking down WikiWords..."
-
-  SED_FLAG=""
-
-  if [ "$SYSTEM" == 'Darwin' ]
-  then
-    SED_FLAG="-E"
-  fi
-
-# Find CamelCase words by reg exp and replace with Markdown link [word](word.html)
-
-  FILES=`ls .bliki/intermediate/*.txt`
-
-  for f in $FILES
-  do
-    echo "Processing $f"
-    perl -pe 's/(?<!~)([A-Z][a-z]*)+[A-Z][a-z]+([A-Z][a-z]*)*/[$&]($&.html)/g' <$f >${f}_
-    perl -pe 's/(?<!~)~//g' <${f}_ >$f
-    rm ${f}_
-  done
-}
-
 function add_post_header {
 
   echo "Adding post header..."
@@ -278,6 +253,18 @@ EOF
       mv ${f}__ $f
       rm ${f}_
     fi
+  done
+}
+
+function markdown_wikiwords {
+
+  echo "Marking down WikiWords..."
+
+  files=`ls .bliki/intermediate/*.txt`
+
+  for f in $files
+  do
+    markdown_wikiwords_in_file $f
   done
 }
 
@@ -378,8 +365,12 @@ function copy_to_targetdir {
 
 }
 
+# Run
+
 EXPECTED_ARGS=1
 E_BADARGS=65
+
+. $SCRIPT_DIR/potbliki_util
 
 if [ $# -ne $EXPECTED_ARGS ]
 then

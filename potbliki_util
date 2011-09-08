@@ -1,4 +1,4 @@
-#!/bin/bash
+#! /bin/sh
 
 # PotBliki, Plain Text Bliki Tools.
 # Copyright (C) 2011  Daniel Hjort
@@ -16,42 +16,24 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-EXPECTED_ARGS=1
-E_BADARGS=65
+function markdown_wikiwords_in_file
+{
 
-if [ $# -ne $EXPECTED_ARGS ]
-then
-  echo "usage: install [INSTALL_PATH]"
-  exit $E_BADARGS
-fi
+  SED_FLAG=""
 
-if [ ! -d $1 ]
-then
-  echo "Target path doesn't exist."
-  exit $E_BADARGS
-fi
+  if [ "$SYSTEM" == 'Darwin' ]
+  then
+    SED_FLAG="-E"
+  fi
 
-chmod u+x potbliki
-cp potbliki $1
-cp potbliki_util $1
+# Find CamelCase words by reg exp and replace with Markdown link [word](word.html)
 
-mkdir $1/.potbliki
-cp templates/disqus-template.html $1/.potbliki
-cp templates/html-head-template.html $1/.potbliki
-cp push.cgi $1/.potbliki
+  file=$1
 
-cat <<EOF > $1/.potbliki/potbliki_env
-POTBLIKI_USER_HOME=$HOME
-EOF
+  echo "Processing $file"
+  perl -pe 's/(?<!~)([A-Z][a-z]*)+[A-Z][a-z]+([A-Z][a-z]*)*/[$&]($&.html)/g' <$file >${file}_
+  perl -pe 's/(?<!~)~//g' <${file}_ >$file
+  rm ${file}_
 
+}
 
-DEP=`which sundown`
-
-if [ "$DEP" == '' ]
-then
-  echo "You also need to install sundown."
-  echo "cd lib/sundown"
-  echo "make"
-  echo "chmod 755 sundown"
-  echo "cp sundown [YOUR_PATH]"
-fi
