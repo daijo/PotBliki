@@ -35,7 +35,10 @@ chmod u+x potbliki
 cp potbliki $1
 cp potbliki_util $1
 
-mkdir $1/.potbliki
+if [ ! -d $1/.potbliki ]
+then
+  mkdir $1/.potbliki
+fi
 cp templates/disqus-template.html $1/.potbliki
 cp templates/html-head-template.html $1/.potbliki
 cp push.cgi $1/.potbliki
@@ -49,9 +52,11 @@ DEP=`which sundown`
 
 if [ "$DEP" == '' ]
 then
-  echo "You also need to install sundown."
-  echo "cd lib/sundown"
-  echo "make"
-  echo "chmod 755 sundown"
-  echo "cp sundown [YOUR_PATH]"
+  echo "Installing sundown..."
+  current_dir=`pwd`
+  cd lib/sundown
+  make
+  chmod 755 sundown
+  cp sundown $1
+  cd $current_dir
 fi
