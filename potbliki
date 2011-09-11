@@ -85,6 +85,40 @@ function make {
   copy_to_targetdir
 }
 
+function open_bliki {
+
+  read_bliki_conf
+
+  if [ "${_TARGET_DIR:0:1}" == '~' ]
+  then
+    _TARGET_DIR=`echo $POTBLIKI_USER_HOME${_TARGET_DIR:1}`
+  fi
+
+  if [ ! -f "$_TARGET_DIR/IndexPage.html" ]
+  then
+    echo "No $_TARGET_DIR/IndexFile.html, use potbliki make to create the html."
+    exit 1
+  fi 
+  echo "Opening bliki..."
+
+  if [ "$SYSTEM" == 'Darwin' ]
+  then
+    open "$_TARGET_DIR/IndexPage.html"
+    exit 1
+  else
+    # from http://stackoverflow.com/questions/3124556/clean-way-to-launch-the-web-browser-from-shell-script not tested on linux yet...
+    if [ -n $BROWSER ]; then
+      $BROWSER "$_TARGET_DIR/IndexPage.html"
+    elif which xdg-open > /dev/null; then
+      xdg-open "$_TARGET_DIR/IndexPage.html"
+    elif which gnome-open > /dev/null; then
+      gnome-open "$_TARGET_DIR/IndexPage.html"
+    else
+      echo "Could not detect the web browser to use."
+    fi
+  fi
+}
+
 function read_bliki_conf {
   echo "Reading config..."
 
@@ -374,7 +408,7 @@ E_BADARGS=65
 
 if [ $# -ne $EXPECTED_ARGS ]
 then
-  echo "usage: potwiki init|github|make|help"
+  echo "usage: potwiki init|github|make|open|help"
   exit $E_BADARGS
 fi
 
@@ -399,11 +433,18 @@ then
   make
 fi
 
+# open (open in default browser)
+
+if [ $1 == 'open' ]
+then
+  open_bliki
+fi
+
 # help
 
 if [ $1 == 'help' ]
 then
-  echo "usage: potwiki init|github|make|help"
+  echo "usage: potwiki init|github|make|open|help"
   echo "init: initiates a bliki in this directory."
   echo "github: adds github post-receive cgi-script to this bliki."
   echo "make: makes the bliki in this directory and moves the result to target_dir."
