@@ -38,6 +38,10 @@ if !hasmapto('<Plug>MakeBliki')
   map <unique> <Leader>bm <Plug>MakeBliki
 endif
 
+if !hasmapto('<Plug>OpenBliki')
+  map <unique> <Leader>bo <Plug>OpenBliki
+endif
+
 " ------------------------------------------------------------------------------
 " Global Maps:
 map <silent> <unique> <script> <Plug>AddPostHeader
@@ -46,6 +50,9 @@ map <silent> <unique> <script> <Plug>AddPostHeader
 map <silent> <unique> <script> <Plug>MakeBliki
  \ :set lz<CR>:call <SID>MakeBliki()<CR>:set nolz<CR>
 
+map <silent> <unique> <script> <Plug>OpenBliki
+ \ :set lz<CR>:call <SID>OpenBliki()<CR>:set nolz<CR>
+
 " ------------------------------------------------------------------------------
 " Functions 
 fun! s:AddPostHeader()
@@ -53,10 +60,13 @@ fun! s:AddPostHeader()
 endfun
 
 fun! s:MakeBliki()
-
   :!potbliki make
-
 endfun
+
+fun! s:OpenBliki()
+  :!potbliki open
+endfun
+
 
 " ------------------------------------------------------------------------------
 let &cpo= s:keepcpo
