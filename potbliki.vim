@@ -56,7 +56,12 @@ map <silent> <unique> <script> <Plug>OpenBliki
 " ------------------------------------------------------------------------------
 " Functions 
 fun! s:AddPostHeader()
-
+  call append(0, [
+                 \ "title: [TITLE]",
+                 \ "author: [FIRSTNAME] [LASTNAME]",
+                 \ "date: [YYYY]/[MM]/[DD]",
+                 \ "location: [CITY], [COUNTRY]",
+                 \ "tags: [TAGS]"])
 endfun
 
 fun! s:MakeBliki()
