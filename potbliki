@@ -351,7 +351,6 @@ function add_container_html {
   cat $SCRIPT_DIR/.potbliki/html-head-template.html | sed -e 's/\[BLIKI_NAME\]/'"$_BLIKI_NAME"'/g' > specific-html-head-template.html
 
   SCRIPTS=`ls .bliki/*.js`
-  echo $SCRIPTS
   SCRIPTS_HTML=""
 
   for s in $SCRIPTS
