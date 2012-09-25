@@ -96,6 +96,10 @@ If you have a Disqus-account, register the Bliki there and enter the Disqus shor
 
     DISQUS_SHORTNAME="techaregbliki"
 
+## Page Javascript
+
+Javascript files put in the .bliki directory will be picked up during the blike make process and added to each page. Useful for Google Analytics etc.
+
 Roadmap
 -------
 

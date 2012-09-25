@@ -348,12 +348,30 @@ function add_container_html {
 
   echo "Adding container html..."
 
+  cat $SCRIPT_DIR/.potbliki/html-head-template.html | sed -e 's/\[BLIKI_NAME\]/'"$_BLIKI_NAME"'/g' > specific-html-head-template.html
+
+  SCRIPTS=`ls .bliki/*.js`
+  echo $SCRIPTS
+  SCRIPTS_HTML=""
+
+  for s in $SCRIPTS
+  do
+    SCRIPTS_HTML="$SCRIPTS_HTML<script type=\"text/javascript\">`cat $s`</script>"
+  done
+
+  echo $SCRIPTS_HTML
+
+  cat << EOF >> specific-html-head-template.html
+$SCRIPTS_HTML
+</head>
+<body>
+EOF
+
   FILES=`ls .bliki/html/*.html`
 
   for f in $FILES
   do
     echo "Processing $f"
-    cat $SCRIPT_DIR/.potbliki/html-head-template.html | sed -e 's/\[BLIKI_NAME\]/'"$_BLIKI_NAME"'/g' > specific-html-head-template.html
     cat specific-html-head-template.html $f > ${f}_
     mv ${f}_ $f
 
