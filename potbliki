@@ -154,6 +154,7 @@ do
     FIRST_WORD=`head -n 1 $f | awk '{print $1}'`
     DATE=`head -n 4 $f | sed -n 3p | awk '{print $2}'`
     [ "$FIRST_WORD" == 'title:' ] && ( echo "* $DATE - $f" | sed 's/\(.*\)\..*/\1/'  >> .bliki/post_list)
+    [ "$FIRST_WORD" != 'title:' ] && ( echo $f >> .bliki/wiki_list)
 done
 
 sort -r .bliki/post_list > .bliki/sorted_post_list
@@ -170,8 +171,11 @@ done
 
 IFS=$OLD_IFS
 
+WIKI_SRC_FILES=`cat .bliki/wiki_list`
+
 rm .bliki/post_list
 rm .bliki/sorted_post_list
+rm .bliki/wiki_list
 
 echo "" >> $INDEX_PAGE
 echo "[_Posts RSS_](rss.xml)" >> $INDEX_PAGE
@@ -182,7 +186,7 @@ echo "" >> $INDEX_PAGE
 
 # For the rest in alphabetical order echo filename
 
-for f in $SRC_FILES
+for f in $WIKI_SRC_FILES
 do
     echo $f | sed 's/\(.*\)\..*/\1/' >> $INDEX_PAGE
 done
